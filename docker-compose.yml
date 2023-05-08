@@ -1,0 +1,25 @@
+version: '3.8'
+
+networks:
+    rr-example:
+
+services:
+    php:
+        image: rr-example
+        build:
+            context: .
+        volumes:
+            -  ./:/var/www/html
+        command: rr serve -c .rr.yaml
+        depends_on:
+            - rabbitmq
+        networks:
+            - rr-example
+
+    rabbitmq:
+        image: rabbitmq:3.11-management-alpine
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        networks:
+            - rr-example

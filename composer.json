@@ -1,0 +1,11 @@
+{
+  "name": "vendor_name/rr-example",
+  "description": "description",
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "license": "proprietary",
+  "require": {
+    "spiral/roadrunner-cli": "^2.5",
+    "spiral/roadrunner-jobs": "^4.0"
+  }
+}
