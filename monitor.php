@@ -14,8 +14,11 @@ while (true) {
         $explode = explode("\n", $response);
 
         foreach ($explode as $string) {
-            if (str_starts_with($string, 'rr_jobs_workers_working')/* || str_starts_with($string, 'rr_jobs_workers_ready')*/) {
-                echo $string;
+            if (str_starts_with(
+                $string,
+                'rr_jobs_workers_working',
+            )/* || str_starts_with($string, 'rr_jobs_workers_ready')*/) {
+                var_dump($string);
             }
         }
     }

@@ -23,10 +23,10 @@ RUN install-php-extensions sockets
 ENV COMPOSER_ALLOW_SUPERUSER=1
 COPY --from=composer /composer /usr/bin/composer
 
-COPY composer.json ./
+WORKDIR /var/www/html
+
+COPY composer.json composer.lock ./
 
 RUN composer install
 
 COPY . .
-
-WORKDIR /var/www/html

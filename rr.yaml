@@ -18,10 +18,10 @@ logs:
     output: stdout
 
 jobs:
-    num_pollers: 128
+    num_pollers: ${NUM_POLLERS}
     pipeline_size: 100000
     pool:
-        num_workers: 64
+        num_workers: ${NUM_WORKERS}
         max_jobs: 3000
     consume:
         - queue-1

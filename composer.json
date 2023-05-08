@@ -1,11 +1,12 @@
 {
-  "name": "vendor_name/rr-example",
+  "name": "embargo2710/rr-promblem-demo",
   "description": "description",
   "minimum-stability": "stable",
   "prefer-stable": true,
   "license": "proprietary",
   "require": {
     "spiral/roadrunner-cli": "^2.5",
-    "spiral/roadrunner-jobs": "^4.0"
+    "spiral/roadrunner-jobs": "^4.0",
+    "ext-curl": "*"
   }
 }

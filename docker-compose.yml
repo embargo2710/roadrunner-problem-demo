@@ -8,11 +8,10 @@ services:
         image: rr-example
         build:
             context: .
-        volumes:
-            -  ./:/var/www/html
-        command: rr serve -c .rr.yaml
-        depends_on:
-            - rabbitmq
+        command: "rr serve -c rr.yaml -p"
+        environment:
+            - NUM_POLLERS=128
+            - NUM_WORKERS=64
         networks:
             - rr-example
 
