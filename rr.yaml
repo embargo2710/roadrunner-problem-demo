@@ -34,7 +34,7 @@ jobs:
             driver: amqp
             config:
                 queue: queue-1
-                prefetch: 10
+                prefetch: 100
                 priority: 0
                 durable: true
                 exchange_durable: true
@@ -44,7 +44,7 @@ jobs:
             driver: amqp
             config:
                 queue: queue-2
-                prefetch: 10
+                prefetch: 100
                 priority: 0
                 durable: true
                 exchange_durable: true
@@ -54,7 +54,7 @@ jobs:
             driver: amqp
             config:
                 queue: queue-3
-                prefetch: 10
+                prefetch: 100
                 priority: 0
                 durable: true
                 exchange_durable: true
@@ -64,7 +64,7 @@ jobs:
             driver: amqp
             config:
                 queue: queue-4
-                prefetch: 10
+                prefetch: 100
                 priority: 0
                 durable: true
                 exchange_durable: true
@@ -74,7 +74,7 @@ jobs:
             driver: amqp
             config:
                 queue: queue-5
-                prefetch: 10
+                prefetch: 100
                 priority: 0
                 durable: true
                 exchange_durable: true

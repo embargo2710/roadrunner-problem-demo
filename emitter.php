@@ -24,7 +24,7 @@ $queues = [
 
 $len = count($queues);
 
-for ($i = 0; $i <= 5000; $i++) {
+for ($i = 0; $i < getenv('NUM_WORKERS'); $i++) {
     $q = random_int(0, $len - 1);
 
     $job = $queues[$q]->create('test-1', '{"site": "https://example.com"}');

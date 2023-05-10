@@ -9,9 +9,7 @@ require __DIR__ . '/vendor/autoload.php';
 $consumer = new Consumer();
 
 while (($task = $consumer->waitTask())) {
-    $random = random_int(50, 1000);
-
-    usleep($random * 1000);
+    sleep(10);
 
     $task->complete();
 }
