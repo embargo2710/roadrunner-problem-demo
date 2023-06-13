@@ -34,29 +34,32 @@ jobs:
             driver: amqp
             config:
                 queue: queue-1
-                prefetch: 100
+                prefetch: 10
                 priority: 0
                 durable: true
                 exchange_durable: true
+                #multiple_ack: true
                 consume_all: true
                 routing_key: queue-1
         queue-2:
             driver: amqp
             config:
                 queue: queue-2
-                prefetch: 100
+                prefetch: 10
                 priority: 0
                 durable: true
                 exchange_durable: true
+                #multiple_ack: true
                 consume_all: true
                 routing_key: queue-2
         queue-3:
             driver: amqp
             config:
                 queue: queue-3
-                prefetch: 100
+                prefetch: 10
                 priority: 0
                 durable: true
+                #multiple_ack: true
                 exchange_durable: true
                 consume_all: true
                 routing_key: queue-3
@@ -64,9 +67,10 @@ jobs:
             driver: amqp
             config:
                 queue: queue-4
-                prefetch: 100
+                prefetch: 10
                 priority: 0
                 durable: true
+                #multiple_ack: true
                 exchange_durable: true
                 consume_all: true
                 routing_key: queue-4
@@ -74,9 +78,10 @@ jobs:
             driver: amqp
             config:
                 queue: queue-5
-                prefetch: 100
+                prefetch: 10
                 priority: 0
                 durable: true
+                #multiple_ack: true
                 exchange_durable: true
                 consume_all: true
                 routing_key: queue-5

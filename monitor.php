@@ -5,8 +5,10 @@ declare(strict_types=1);
 require __DIR__ . '/vendor/autoload.php';
 
 while (true) {
-    $ch = curl_init('0.0.0.0:9254');
+    $ch = curl_init('php:9254');
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 1);
+    curl_setopt($ch, CURLOPT_TIMEOUT_MS, 100);
     $response = curl_exec($ch);
     curl_close($ch);
 
@@ -21,7 +23,9 @@ while (true) {
                 var_dump($string);
             }
         }
+    } else {
+        var_dump(time() . " RESPONSE FAILED");
     }
 
-    sleep(3);
+    usleep(500000);
 }
