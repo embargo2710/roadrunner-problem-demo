@@ -23,19 +23,17 @@ No need to call Redis or something.
 ## Output
 
 ```
-[INFO] RoadRunner server started; version: 2023.1.5, buildtime: 2023-06-08T14:45:04+0000
-2023-06-13T11:15:33+0000        INFO    server      
-Fatal error: Uncaught Error: Class "Predis\Client" not found in /var/www/html/worker.php:11
+[INFO] RoadRunner server started; version: 2023.1.5, buildtime: 2023-06-08T14:45:04+0000   
+2023-06-13T11:34:59+0000        INFO    server      
+Fatal error: Uncaught Error in /var/www/html/worker.php:11
 Stack trace:
 #0 {main}
-  thrown in /var/www/html/worker.php on line 11
-2023-06-13T11:15:33+0000        INFO    server      
+  thrown in /var/www/html/worker.php on line 11   
 
 ... MANY SIMILAR ERRORS ...
 
-  thrown in /var/www/html/worker.php on line 11
-2023-06-13T11:15:34+0000        INFO    server      
-Fatal error: Uncaught Error: Class "Predis\Client" not found in /var/www/html/worker.php:11
+2023-06-13T11:34:59+0000        INFO    server      
+Fatal error: Uncaught Error in /var/www/html/worker.php:11
 Stack trace:
 #0 {main}
   thrown in /var/www/html/worker.php on line 11
