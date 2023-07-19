@@ -1,6 +1,6 @@
 FROM composer/composer:2-bin AS composer
 
-FROM ghcr.io/roadrunner-server/roadrunner:2023.1.2 AS roadrunner
+FROM ghcr.io/roadrunner-server/roadrunner:2023.2 AS roadrunner
 
 FROM mlocati/php-extension-installer:2 AS php_extension_installer
 

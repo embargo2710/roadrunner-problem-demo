@@ -4,79 +4,17 @@ metrics:
     address: '0.0.0.0:9254'
 
 rpc:
-    listen: 'tcp://127.0.0.1:6001'
+    listen: 'tcp://0.0.0.0:6001'
 
 server:
     command: 'php worker.php'
+    on_init:
+        command: "php metric.php"
 
 amqp:
     addr: 'amqp://guest:guest@rabbitmq:5672'
 
 logs:
-    level: debug
+    level: info
     mode: development
     output: stdout
-
-jobs:
-    num_pollers: ${NUM_POLLERS}
-    pipeline_size: 100000
-    pool:
-        num_workers: ${NUM_WORKERS}
-        max_jobs: 3000
-    consume:
-        - queue-1
-        - queue-2
-        - queue-3
-        - queue-4
-        - queue-5
-    pipelines:
-        queue-1:
-            driver: amqp
-            config:
-                queue: queue-1
-                prefetch: 100
-                priority: 0
-                durable: true
-                exchange_durable: true
-                consume_all: true
-                routing_key: queue-1
-        queue-2:
-            driver: amqp
-            config:
-                queue: queue-2
-                prefetch: 100
-                priority: 0
-                durable: true
-                exchange_durable: true
-                consume_all: true
-                routing_key: queue-2
-        queue-3:
-            driver: amqp
-            config:
-                queue: queue-3
-                prefetch: 100
-                priority: 0
-                durable: true
-                exchange_durable: true
-                consume_all: true
-                routing_key: queue-3
-        queue-4:
-            driver: amqp
-            config:
-                queue: queue-4
-                prefetch: 100
-                priority: 0
-                durable: true
-                exchange_durable: true
-                consume_all: true
-                routing_key: queue-4
-        queue-5:
-            driver: amqp
-            config:
-                queue: queue-5
-                prefetch: 100
-                priority: 0
-                durable: true
-                exchange_durable: true
-                consume_all: true
-                routing_key: queue-5

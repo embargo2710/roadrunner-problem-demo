@@ -10,10 +10,21 @@ services:
             context: .
         command: "rr serve -c rr.yaml -p"
         environment:
-            - NUM_POLLERS=128
-            - NUM_WORKERS=64
+            - NUM_POLLERS=8
+            - NUM_WORKERS=8
         networks:
             - rr-example
+        volumes:
+            - ./rr.yaml:/var/www/html/rr.yaml
+            - ./composer.json:/var/www/html/composer.json
+            - ./composer.lock:/var/www/html/composer.lock
+            - ./worker.php:/var/www/html/worker.php
+            - ./emitter.php:/var/www/html/emitter.php
+            - ./metric.php:/var/www/html/metric.php
+            - ./monitor.php:/var/www/html/monitor.php
+
+    redis:
+        image: redis:7.0.8-alpine
 
     rabbitmq:
         image: rabbitmq:3.11-management-alpine
