@@ -11,10 +11,7 @@ server:
     on_init:
         command: "php metric.php"
 
-amqp:
-    addr: 'amqp://guest:guest@rabbitmq:5672'
-
 logs:
-    level: info
+    level: debug
     mode: development
     output: stdout

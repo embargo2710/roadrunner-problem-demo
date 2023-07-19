@@ -1,58 +1,22 @@
 ## What is it?
 
-RR + simple PHP-worker with a random sleep function (from 50 to 1000 ms).
-
-There is a hypothesis that workers cannot get enough jobs.
-
-There we have 64 workers and 128 pollers.
-
-## How to run
-
-`docker-compose build`
-
-`docker-compose up -d rabbitmq` and wait a little
-
-`docker-compose up -d php`
+on_init + declare metrics makes me cry
 
 ## How to reproduce
 
-`docker-compose exec php sh -c "php emitter.php"` - run as many times as you want
+`docker-compose build`
 
-`docker-compose exec php sh -c "php monitor.php"` - run, wait and stop CTRL+C
+`docker-compose up -d php`
 
 ## Output
 
 ```
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 36"
-string(26) "rr_jobs_workers_working 25"
-string(26) "rr_jobs_workers_working 16"
-string(26) "rr_jobs_workers_working 10"
-string(26) "rr_jobs_workers_working 10"
-string(26) "rr_jobs_workers_working 10"
-string(26) "rr_jobs_workers_working 10"
-string(26) "rr_jobs_workers_working 10"
-string(25) "rr_jobs_workers_working 7"
-string(25) "rr_jobs_workers_working 0"
-string(25) "rr_jobs_workers_working 0"
-string(25) "rr_jobs_workers_working 0"
-string(25) "rr_jobs_workers_working 0"
-string(25) "rr_jobs_workers_working 0"
-string(25) "rr_jobs_workers_working 0"
+2023-07-19T10:47:02+0000        DEBUG   rpc             plugin was started      {"address": "tcp://0.0.0.0:6001", "list of the plugins with RPC methods:": ["app", "metrics", "informer", "resetter", "lock"]}
+2023-07-19T10:47:02+0000        DEBUG   metrics         declaring new metric    {"name": "test", "type": "counter", "namespace": ""}
+2023-07-19T10:47:02+0000        DEBUG   metrics         metric successfully added       {"name": "test", "type": "counter", "namespace": ""}
+2023-07-19T10:47:02+0000        DEBUG   metrics         adding metric   {"name": "test", "value": 1, "labels": []}
+2023-07-19T10:47:02+0000        DEBUG   metrics         metric successfully added       {"name": "test", "labels": [], "value": 1}
+2023-07-19T10:47:02+0000        INFO    server          ON INIT
+handle_serve_command: Function call error:
+        got initial serve error from the Vertex *metrics.Plugin, stopping execution, error: duplicate metrics collector registration attempted
 ```
-
-## Playground
-
-Change environment vars `NUM_POLLERS` and `NUM_WORKERS` in `docker-compose.yml`
-
-`docker-compose up -d php`
-
-Then go to "How to reproduce"
