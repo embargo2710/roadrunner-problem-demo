@@ -31,23 +31,11 @@ jobs:
             max_worker_memory: 246
             exec_ttl: 300s
     consume:
-        - amqp_message_accumulator
+        - boltdb
     pipelines:
-        amqp_message_accumulator:
+        boltdb:
             driver: boltdb
             config:
                 prefetch: 1
                 priority: 10
                 file: /tmp/amqp_message_buffer.db
-        messages:
-            driver: amqp
-            config:
-                queue: messages
-                prefetch: 10
-                priority: 10
-                redial_timeout: 10
-                routing_key: messages
-                durable: true
-                exchange_durable: true
-                consume_all: true
-                requeue_on_fail: false

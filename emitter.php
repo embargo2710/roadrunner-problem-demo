@@ -14,9 +14,9 @@ $jobs = new Jobs(
     )
 );
 
-$queue = $jobs->connect('amqp_message_accumulator');
+$queue = $jobs->connect('boltdb');
 
-for ($i = 0; $i < 100; $i++) {
+for ($i = 0; $i < 1000; $i++) {
     $job = $queue->create('test', '{"site": "https://example.com"}');
     $queue->dispatch($job);
 }
