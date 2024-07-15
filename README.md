@@ -19,7 +19,7 @@
 
 `php emitter.php` (emit 1000 tasks to pipeline)
 
-3. Then immediately go to first terminal and stop RR by CTRL + C.
+3. Then immediately go to first terminal and stop RR by CTRL + C twice.
 
 Start RR again: `rr serve`
 
