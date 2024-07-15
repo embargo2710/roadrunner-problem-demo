@@ -14,19 +14,9 @@ $jobs = new Jobs(
     )
 );
 
-$queues = [
-    $jobs->connect('queue-1'),
-    $jobs->connect('queue-2'),
-    $jobs->connect('queue-3'),
-    $jobs->connect('queue-4'),
-    $jobs->connect('queue-5'),
-];
+$queue = $jobs->connect('amqp_message_accumulator');
 
-$len = count($queues);
-
-for ($i = 0; $i < getenv('NUM_WORKERS'); $i++) {
-    $q = random_int(0, $len - 1);
-
-    $job = $queues[$q]->create('test-1', '{"site": "https://example.com"}');
-    $queues[$q]->dispatch($job);
+for ($i = 0; $i < 100; $i++) {
+    $job = $queue->create('test', '{"site": "https://example.com"}');
+    $queue->dispatch($job);
 }

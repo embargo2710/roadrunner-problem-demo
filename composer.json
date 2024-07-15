@@ -7,6 +7,8 @@
   "require": {
     "spiral/roadrunner-cli": "^2.5",
     "spiral/roadrunner-jobs": "^4.0",
-    "ext-curl": "*"
+    "spiral/roadrunner-http": "^3.5",
+    "ext-curl": "*",
+    "laminas/laminas-diactoros": "^3.3"
   }
 }

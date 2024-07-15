@@ -9,6 +9,7 @@ rpc:
 server:
     command: 'php worker.php'
 
+
 amqp:
     addr: 'amqp://guest:guest@rabbitmq:5672'
 
@@ -18,65 +19,35 @@ logs:
     output: stdout
 
 jobs:
-    num_pollers: ${NUM_POLLERS}
-    pipeline_size: 100000
+    num_pollers: 8
+    parallelism: 8
     pool:
-        num_workers: ${NUM_WORKERS}
-        max_jobs: 3000
+        num_workers: 4
+        max_jobs: 500
+        allocate_timeout: 30s
+        reset_timeout: 10s
+        destroy_timeout: 10s
+        supervisor:
+            max_worker_memory: 246
+            exec_ttl: 300s
     consume:
-        - queue-1
-        - queue-2
-        - queue-3
-        - queue-4
-        - queue-5
+        - amqp_message_accumulator
     pipelines:
-        queue-1:
+        amqp_message_accumulator:
+            driver: boltdb
+            config:
+                prefetch: 1
+                priority: 10
+                file: /tmp/amqp_message_buffer.db
+        messages:
             driver: amqp
             config:
-                queue: queue-1
-                prefetch: 100
-                priority: 0
+                queue: messages
+                prefetch: 10
+                priority: 10
+                redial_timeout: 10
+                routing_key: messages
                 durable: true
                 exchange_durable: true
                 consume_all: true
-                routing_key: queue-1
-        queue-2:
-            driver: amqp
-            config:
-                queue: queue-2
-                prefetch: 100
-                priority: 0
-                durable: true
-                exchange_durable: true
-                consume_all: true
-                routing_key: queue-2
-        queue-3:
-            driver: amqp
-            config:
-                queue: queue-3
-                prefetch: 100
-                priority: 0
-                durable: true
-                exchange_durable: true
-                consume_all: true
-                routing_key: queue-3
-        queue-4:
-            driver: amqp
-            config:
-                queue: queue-4
-                prefetch: 100
-                priority: 0
-                durable: true
-                exchange_durable: true
-                consume_all: true
-                routing_key: queue-4
-        queue-5:
-            driver: amqp
-            config:
-                queue: queue-5
-                prefetch: 100
-                priority: 0
-                durable: true
-                exchange_durable: true
-                consume_all: true
-                routing_key: queue-5
+                requeue_on_fail: false
