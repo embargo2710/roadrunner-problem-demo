@@ -8,6 +8,10 @@ require __DIR__ . '/vendor/autoload.php';
 
 $consumer = new Consumer();
 
+throw new Error();
+
+sleep(10);
+
 while (($task = $consumer->waitTask())) {
     sleep(10);
 

@@ -1,20 +1,20 @@
 ## What is it?
 
-RR + simple PHP-worker with a random sleep function (from 50 to 1000 ms).
+Error SIGSEGV occurs while workers did not start, but someone call `metric` plugin too early.
 
-There is a hypothesis that workers cannot get enough jobs.
+No need to call Redis or something.
 
-There we have 64 workers and 128 pollers.
-
-## How to run
+## How to reproduce
 
 `docker-compose build`
 
 `docker-compose up -d rabbitmq` and wait a little
 
-`docker-compose up -d php`
+`docker-compose up -d monitor` and see many `string(25) "1686655710 RESPONSE FAILED"` in loop
 
-## How to reproduce
+`docker-compose up -d php` and see errors
+
+## 
 
 `docker-compose exec php sh -c "php emitter.php"` - run as many times as you want
 
@@ -23,36 +23,34 @@ There we have 64 workers and 128 pollers.
 ## Output
 
 ```
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 50"
-string(26) "rr_jobs_workers_working 36"
-string(26) "rr_jobs_workers_working 25"
-string(26) "rr_jobs_workers_working 16"
-string(26) "rr_jobs_workers_working 10"
-string(26) "rr_jobs_workers_working 10"
-string(26) "rr_jobs_workers_working 10"
-string(26) "rr_jobs_workers_working 10"
-string(26) "rr_jobs_workers_working 10"
-string(25) "rr_jobs_workers_working 7"
-string(25) "rr_jobs_workers_working 0"
-string(25) "rr_jobs_workers_working 0"
-string(25) "rr_jobs_workers_working 0"
-string(25) "rr_jobs_workers_working 0"
-string(25) "rr_jobs_workers_working 0"
-string(25) "rr_jobs_workers_working 0"
+[INFO] RoadRunner server started; version: 2023.1.5, buildtime: 2023-06-08T14:45:04+0000   
+2023-06-13T11:34:59+0000        INFO    server      
+Fatal error: Uncaught Error in /var/www/html/worker.php:11
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/worker.php on line 11   
+
+... MANY SIMILAR ERRORS ...
+
+2023-06-13T11:34:59+0000        INFO    server      
+Fatal error: Uncaught Error in /var/www/html/worker.php:11
+Stack trace:
+#0 {main}
+  thrown in /var/www/html/worker.php on line 11
+{"time":"2023-06-13T11:15:34.168980018Z","level":"ERROR","msg":"plugin returned an error from the Serve","!BADKEY":"static_pool_allocate_workers: WorkerAllocate: EOF","id":"*jobs.Plugin"}
+panic: runtime error: invalid memory address or nil pointer dereference
+[signal SIGSEGV: segmentation violation code=0x1 addr=0x28 pc=0xc65db4]
+goroutine 659 [running]:
+github.com/roadrunner-server/sdk/v4/pool/static_pool.(*Pool).Workers(0x52?)
+        github.com/roadrunner-server/sdk/v4@v4.2.6/pool/static_pool/static_pool.go:119 +0x14
+github.com/roadrunner-server/jobs/v4.(*Plugin).Workers(0xc0001f1200)
+        github.com/roadrunner-server/jobs/v4@v4.3.11/plugin.go:286 +0xbb
+github.com/roadrunner-server/sdk/v4/metrics.(*StatsExporter).Collect(0xc000b80a50, 0xc000d64000?)
+        github.com/roadrunner-server/sdk/v4@v4.2.6/metrics/metrics.go:42 +0x4a
+github.com/roadrunner-server/jobs/v4.(*statsExporter).Collect(0xc0000c4480, 0xc000ebef60?)
+        github.com/roadrunner-server/jobs/v4@v4.3.11/metrics.go:86 +0x31
+github.com/prometheus/client_golang/prometheus.(*Registry).Gather.func1()
+        github.com/prometheus/client_golang@v1.15.1/prometheus/registry.go:455 +0x10d
+created by github.com/prometheus/client_golang/prometheus.(*Registry).Gather
+        github.com/prometheus/client_golang@v1.15.1/prometheus/registry.go:547 +0xc09
 ```
-
-## Playground
-
-Change environment vars `NUM_POLLERS` and `NUM_WORKERS` in `docker-compose.yml`
-
-`docker-compose up -d php`
-
-Then go to "How to reproduce"
